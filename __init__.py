@@ -6,13 +6,14 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route("/")
 def home():
     return render_template("home.html")
 
-@app.route('/aston')
+@app.route("/aston")
 def aston():
     return render_template("aston.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
