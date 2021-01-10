@@ -21,3 +21,12 @@ class LoginForm(Form):
     password = PasswordField('Password', [validators.Length(min=8
                                                             ), validators.DataRequired()])
     remember = BooleanField('Remember me')
+
+class EditForm(Form):
+    first_name = StringField('First Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+    last_name = StringField('Last Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+
+    email = StringField('Email', [validators.Length(min=1,
+                                                    max=150), validators.DataRequired(), validators.email()])
+    username = StringField('Username', [validators.Length(min=8
+                                                          ), validators.DataRequired()])

@@ -1,0 +1,59 @@
+{% extends "/base.html" %}
+{% from 'components/formhelper.html' import render_field %}
+{% block title %}EatSafe - MyProfile{% endblock %}
+{% block content %}
+
+
+<style>
+    div .viewprofile{
+    text-align:center;
+    margin-top:1em;
+    }
+
+    #icon{
+      width: 200px;
+      height: 200px;
+      border-radius:100%;
+    }
+
+    .container{
+    width:250px;
+    padding-top:2em;
+    text-align:left;
+    }
+
+    #backbtn{
+    text-decoration:none;
+    color:black;
+    font-size:24px;
+    margin-left:1em;
+    }
+
+    #backbtn img {
+    width:24px;
+    height:24px;
+    }
+
+</style>
+<a id="backbtn" href="/home"><img src="../static/images/Back.png"> Back</a>
+<div class="viewprofile">
+    <form action="" method="POST" enctype="multipart/form-data">
+        <h1>My Profile</h1>
+        <img id="icon" src=/static/images/profilepictures/{{session['profile_pic']}}>
+        <div class="container">
+            <div>
+                <p><strong>Username:</strong>
+                    {{session['username']}}</p>
+                <p><strong>First Name:</strong>
+                    {{session['first_name']}}</p>
+                <p><strong>Last Name:</strong>
+                    {{session['last_name']}}</p>
+                <p><strong>Email:</strong>
+                    {{session['email']}}</p>
+            </div>
+            <a href="/profile/editprofile">Edit my profile</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
