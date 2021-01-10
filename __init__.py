@@ -18,7 +18,7 @@ def allowed_image(filename):
     else:
         return False
 
-@app.route("/home")
+@app.route("/")
 def home():
     return render_template("home.html")
 
@@ -167,6 +167,7 @@ def editprofile():
             userObj.set_user_email(email)
             session['email'] = email
 
+            db.close()
 
             if request.files['image'].filename != "":
                 image = request.files["image"]
@@ -184,7 +185,9 @@ def editprofile():
                     userObj = db[session['user_id']]
                     userObj.set_user_profile_pic(profile_pic)
                     db.close()
-
+            db = shelve.open('databases/user.db', 'w')
+            db[session['user_id']] = userObj
+            db.close()
             return redirect(url_for('viewprofile'))
         return render_template('profile/editprofile.html', form=form)
 
