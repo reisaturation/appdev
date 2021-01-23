@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Seating Plan{% endblock %}
+
+{% block content %}
+
+<style>
+*,*:before,*:after {
+    box-sizing: border-box;
+}
+ol {
+    list-style: none;
+}
+body.h1 {
+    padding: 2em;
+}
+.planner {
+    width: 1000px;
+    margin: auto;
+    background: rgba(240, 178, 102 ,0.5);
+    padding: 2em;
+}
+.column1 {
+	width: 30%;
+	display: inline-block;
+}
+
+.column2 {
+    width: 30%%;
+    display: inline-block;
+}
+
+label {
+    margin: auto;
+    border-style: solid;
+    border-width: 5px;
+    background-color: white;
+    padding: 10px;
+}
+    input[type=checkbox] {
+        opacity : 0;
+    }
+    input[type=checkbox]:checked + label{
+        background-color: red;
+    }
+
+.seat {
+    padding: 20px;
+}
+
+</style>
+<div class="body">
+    <h1>Select Seats</h1>
+</div>
+<h1>
+    <a href="/temporary">Temporary list</a>
+</h1>
+<form action="" method="get">
+    <ol class="planner">
+            <ol class ="seats">
+                {% for seat in seats%}
+                <li class="seat">
+                    <input type="checkbox" onclick="select()" id="1">
+                    <label for="1"> {{seat.number}}</label>
+                </li>
+            </ol>
+        <li class="column1">
+            <ol class ="seats">
+                <li class="seat">
+                    <input type="checkbox" id="5">
+                    <label for="5">5 </label>
+                </li>
+                 <li class="seat">
+                    <input type="checkbox" id="6">
+                    <label for="6"> 6</label>
+                </li>
+                 <li class="seat">
+                    <input type="checkbox" id="7">
+                    <label for="7"> 7</label>
+                </li>
+                 <li class="seat">
+                    <input type="checkbox" id="8">
+                    <label for="8">8 </label>
+                </li>
+            </ol>
+        </li>
+        <li class="column2">
+            <ol class ="seats">
+                <li class="seat">
+                    <input type="checkbox" id="9">
+                    <label for="9"> 9</label>
+                </li>
+                 <li class="seat">
+                    <input type="checkbox" id="10">
+                    <label for="10"> 10</label>
+                </li>
+                 <li class="seat">
+                    <input type="checkbox" id="11">
+                    <label for="11"> 11</label>
+                </li>
+                 <li class="seat">
+                    <input type="checkbox" id="12">
+                    <label for="12"> 12</label>
+                </li>
+            </ol>
+        </li>
+        <li class="column2">
+            <ol class ="seats">
+                <li class="seat">
+                    <input type="checkbox" id="13">
+                    <label for="13">13 </label>
+                </li>
+                 <li class="seat">
+                    <input type="checkbox" id="14">
+                    <label for="14"> 14</label>
+                </li>
+                 <li class="seat">
+                    <input type="checkbox" id="15">
+                    <label for="15">15 </label>
+                </li>
+                 <li class="seat">
+                    <input type="checkbox" id="16">
+                    <label for="16">16</label>
+                </li>
+            </ol>
+        </li>
+    </ol>
+    <input type="submit" value="submit">
+</form>
+{% endblock %}
+<!-- Use the array thing bookmarked for seatplan
+ not really sure... to really have to manually input all 2x seats as choices?
+ is there a better way  to declutter it?-->
