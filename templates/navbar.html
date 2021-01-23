@@ -29,13 +29,30 @@
   </div>
 
 {% if session['loggedin'] == True%}
-    <a id="redeco" href="/logout">Logout</a>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item pl-3 mb-2 mb-md-0">
+            <a href="/reserveseat" type="button"
+          class="btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Seat Plan</a>
+        </li>
+        <li class="nav-item pl-3 mb-2 mb-md-0">
+            <a href="/retrieveSeats" type="button"
+          class="btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light"> Retrieve Seats</a>
+        </li>
+        <li class="nav-item pl-3 mb-2 mb-md-0">
+            <a href="/logout" type="button"
+          class="btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Logout</a>
+        </li>
+    </ul>
 {% else %}
     <!-- Right -->
     <ul class="navbar-nav ml-auto">
        <li class="nav-item pl-3 mb-2 mb-md-0">
            <a href="/" type="button"
           class="btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Select Restaurants</a>
+       </li>
+       <li class="nav-item pl-3 mb-2 mb-md-0">
+           <a href="/reserveseat" type="button"
+          class="btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Seat Plan</a>
        </li>
       <li class="nav-item pl-3 mb-2 mb-md-0">
         <a href="/login" type="button"
