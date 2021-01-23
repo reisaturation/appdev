@@ -9,7 +9,6 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.secret_key = "verysecretkey"
 
-
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -17,6 +16,92 @@ def home():
 @app.route("/aston")
 def aston():
     return render_template("aston.html")
+
+"""@app.route("/seatplan")
+def seatplan():
+    return render_template("temporary.html")"""
+
+"""@app.route("/temporary")
+def temporary():
+    return render_template("temporary.html")"""
+
+@app.route("/reserveseat", methods=["GET", "POST"])
+def reserveseat():
+    select = SeatForm(request.form)
+    if request.method == 'POST' and select.validate():
+        guest_dict = {}
+        db = shelve.open('databases/guest_storage.db', 'c')
+
+        try:
+            guest_dict = db['Seats']
+        except:
+            print('Error in retrieving Seats from guest_storage.db')
+
+        seat = Seat(select.name.data, select.seat.data)
+        guest_dict[seat.get_user_id()] = seat
+        db['Seats'] = guest_dict
+
+        db.close()
+
+        return redirect(url_for('home'))
+    return render_template('temporary.html', form=select) #error: had to change form=SeatForm to select instead
+                                                          #need to pop out a confirmation screen+shelve
+
+@app.route('/retrieveSeats')
+def retrieve_seats():
+    guest_dict = {}
+    db = shelve.open('databases/guest_storage.db', 'r')
+    guest_dict = db['Seats']
+    db.close()
+
+    guest_list = []
+    for key in guest_dict:
+        seat = guest_dict.get(key)
+        guest_list.append(seat)
+
+    return render_template('retrieveSeats.html', count=len(guest_list), guest_list=guest_list)
+
+
+@app.route("/updateSeats/<int:id>/", methods=['GET', 'POST'])
+def update_seats(id):
+    update_seats = SeatForm(request.form)
+    if request.method == 'POST' and update_seats.validate():
+        guest_dict = {}
+        db = shelve.open('databases/guest_storage.db', 'w')
+        guest_dict = db['Seats']
+
+        seat = guest_dict.get(id)
+        seat.set_name(update_seats.name.data)
+        seat.set_seat(update_seats.seat.data)
+
+        db['Seats'] = guest_dict
+        db.close()
+
+        return redirect(url_for('retrieve_seats'))
+    else:
+        guest_dict = {}
+        db = shelve.open('databases/guest_storage.db', 'r')
+        guest_dict = db['Seats']
+        db.close()
+
+        seat = guest_dict.get(id)
+        update_seats.name.data = seat.get_name()
+        update_seats.seat.data = seat.get_seat()
+
+        return render_template("updateSeats.html", form = update_seats)
+
+@app.route('/deleteSeats/<int:id>', methods=['POST'])
+def delete_seats(id):
+    guest_dict = {}
+    db = shelve.open('databases/guest_storage.db', 'w')
+    guest_dict = db['Seats']
+
+    guest_dict.pop(id)
+
+    db['Seats'] = guest_dict
+    db.close()
+
+    return redirect(url_for('retrieve_seats'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

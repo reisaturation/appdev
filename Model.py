@@ -63,3 +63,31 @@ def update_user(user_obj):
         if user_obj.get_user_id() in db.keys():
             db[user_obj.get_user_id()] = user_obj
             db.close()
+
+
+class Seat():
+    count_id = 0
+
+    def __init__(self, name, seat):
+        Seat.count_id += 1
+        self.__user_id = Seat.count_id
+        self.__name = name
+        self.__seat = seat
+
+    def get_name(self):
+        return self.__name
+
+    def get_user_id(self):
+        return self.__user_id
+
+    def get_seat(self):
+        return self.__seat
+
+    def set_user_id(self, user_id):
+        self.__user_id = user_id
+
+    def set_name(self, name):
+        self.__name = name
+
+    def set_seat(self, seat):
+        self.__seat = seat
