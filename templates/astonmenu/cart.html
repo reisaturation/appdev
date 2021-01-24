@@ -1,0 +1,184 @@
+{% extends "/base.html"%}
+{% block content%}
+<style>
+
+     #backbtn{
+      text-decoration:none;
+      color:black;
+      font-size:18px;
+      margin-left:1em;
+    }
+
+    #backbtn img {
+      width:18px;
+      height:18px;
+      margin-right:5px;
+      margin-top:1em;
+      margin-bottom:1em;
+    }
+
+</style>
+<div>
+<a id="backbtn" href="/aston/menu/signature"><img src="../static/images/Back.png">Back</a>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Food Name</th>
+        <th>Price ($)</th>
+        <th>Quantity</th>
+        <th>Total Price ($)</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for item in session['cart'] %}
+      <tr>
+        <td><img style="width:100px; height:60px; margin-left:2em;" src="../static/images/aston/{{session['cart'][item][3]}}"></td>
+        <td>{{ item }}</td>
+        <td>{{ session['cart'][item][0] }}</td>
+        <td>{{ session['cart'][item][1] }}</td>
+        <td>{{ session['cart'][item][2] }}</td>
+        <td>
+          <form action="{{url_for('deleteitem', id=item)}}" method="POST">
+            <!-- Button to Open the Modal -->
+            <button type="button" class="close" data-toggle="modal" data-target="#myModal_{{item}}">
+            &times;
+            </button>
+
+            <!-- The Modal -->
+            <div class="modal" id="myModal_{{item}}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">Delete Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                    Are you sure you want to delete {{item}}?
+                  </div>
+
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+
+<!--  Orders-->
+  <form>
+    <button style="margin-right:7em;" class="btn btn-primary float-right" data-toggle="modal" data-target="#order" type="button">Order Now</button>
+    <div class="modal" id="order">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title"><strong>Orders</strong></h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          {% for food in session['cart']%}
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="row">
+              <img class="col-md-3" style="width:100px; height:60px;" src="../../static/images/aston/{{ session['cart'][food][3] }}">
+              <div class="col-md-1">
+                {{session['cart'][food][1]}}&times;
+              </div>
+              <div class="col-md-6">
+                <h5>{{food}}</h5>
+              </div>
+              <div class="col-md-2">
+                <small style="color:red; font-size:14px;">${{session['cart'][food][2]}}</small>
+              </div>
+              <br>
+            </div>
+          </div>
+          {%endfor%}
+
+          <br><br>
+
+          <div class="row">
+            <div style="margin-left:2em;" class="col-md-8">Sub-Total:</div>
+            <div class="col-md-2">
+              <small style="color:red; font-size:16px; margin-left:25px;">${{sub_total}}</small>
+            </div>
+          </div>
+
+          <div style="padding-top:8px;" class="row">
+            <div style="margin-left:2em;" class="col-md-8">Delivery Cost:
+            </div>
+            <div class="col-md-2">
+              <small style="color:red; font-size:16px; margin-left:25px;">${{delivery}}</small>
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div style="margin-left:2em;" class="col-md-8">Total Cost:
+            </div>
+            <div class="col-md-2">
+              <small style="color:red; font-size:18px; margin-left:25px;">${{total_cost}}</small>
+            </div>
+          </div>
+          <br><br>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#billing">Confirm Order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--    Billing Details-->
+    <div class="modal" id="billing">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title"><strong>Billing Details</strong></h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="row">
+
+            </div>
+          </div>
+
+          <br><br>
+
+          <div class="row">
+            
+          </div>
+          <br><br>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#receipt">Confirm Order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </form>
+</div>
+{% endblock %}

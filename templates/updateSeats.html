@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Update User{% endblock %}
+
+{% block content %}
+{% from 'components/formhelper.html' import render_field %}
+
+<h1 class="display-4">Update User</h1>
+
+<form method="POST" action="">
+  <div class="form-group">
+    {{ render_field(form.name, class="form-control") }}
+  </div>
+  <div class="form-group">
+    {{ render_field(form.seat, class="form-check", style="list-style-type:none") }}
+  </div>
+  </div>
+  <input type="submit" value="Submit" class="btn btn-primary"/>
+</form>
+{% endblock %}
+

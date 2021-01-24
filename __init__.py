@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from Forms import *
 from Model import *
 from passlib.hash import pbkdf2_sha256
@@ -48,6 +48,7 @@ def login():
                     session['first_name'] = user.get_user_firstname()
                     session['last_name'] = user.get_user_lastname()
                     session['email'] = user.get_user_email()
+                    session['cart'] = {}
                     session['loggedin'] = True
                     db.close()
                     # #making session['verifying'] by checking if user is inside pendingstaff.db
@@ -191,6 +192,149 @@ def editprofile():
             return redirect(url_for('viewprofile'))
         return render_template('profile/editprofile.html', form=form)
 
+@app.route("/aston/menu")
+def menu():
+    return render_template('astonmenu/menu.html')
+
+
+@app.route("/aston/menu/signature", methods = ["POST","GET"])
+def signature():
+    if request.method == "POST":
+        if session.get('loggedin') != True:
+            return redirect(url_for('login'))
+        else:
+            item = request.form['add_cart'].split(',')
+            name = item[0]
+            cost = "{:.2f}".format(float(item[1]))
+            db = shelve.open('databases/food.db', 'r')
+            picture = db[name].get_picture()
+            db.close()
+            if session['cart'].get(name):
+                session['cart'][name][1] += 1
+                session['cart'][name][2] = "{:.2f}".format(float(session['cart'][name][1]) * float(session['cart'][name][0]))
+            else:
+                session['cart'][name] = [cost, 1, cost, picture]
+            flash('Added')
+
+    return render_template('astonmenu/signature.html', form= form)
+
+
+
+
+@app.route("/aston/menu/burger")
+def burger():
+    return render_template('astonmenu/burger.html')
+
+@app.route("/aston/menu/chicken")
+def chicken():
+    return render_template('astonmenu/chicken.html')
+
+@app.route("/aston/menu/sidedish")
+def sidedish():
+    return render_template('astonmenu/sidedish.html')
+
+@app.route("/aston/cart")
+def viewcart():
+    sub_total = 0
+    delivery = "{:.2f}".format(4)
+    for item in session['cart']:
+        sub_total += float(session['cart'][item][2])
+    sub_total = "{:.2f}".format(sub_total)
+    total_cost = "{:.2f}".format(float(delivery) + float(sub_total))
+    return render_template('astonmenu/cart.html', sub_total=sub_total, delivery=delivery, total_cost= total_cost)
+
+@app.route("/aston/cart/<id>", methods = ["POST"])
+def deleteitem(id):
+    cart = session['cart']
+    cart.pop(id)
+    session['cart'] = cart
+    return redirect(url_for('viewcart'))
+
+"""@app.route("/seatplan")
+def seatplan():
+    return render_template("temporary.html")"""
+
+"""@app.route("/temporary")
+def temporary():
+    return render_template("temporary.html")"""
+
+@app.route("/reserveseat", methods=["GET", "POST"])
+def reserveseat():
+    select = SeatForm(request.form)
+    if request.method == 'POST' and select.validate():
+        guest_dict = {}
+        db = shelve.open('databases/guest_storage.db', 'c')
+
+        try:
+            guest_dict = db['Seats']
+        except:
+            print('Error in retrieving Seats from guest_storage.db')
+
+        seat = Seat(select.name.data, select.seat.data)
+        guest_dict[seat.get_user_id()] = seat
+        db['Seats'] = guest_dict
+
+        db.close()
+
+        return redirect(url_for('home'))
+    return render_template('temporary.html', form=select) #error: had to change form=SeatForm to select instead
+                                                          #need to pop out a confirmation screen+shelve
+
+@app.route('/retrieveSeats')
+def retrieve_seats():
+    guest_dict = {}
+    db = shelve.open('databases/guest_storage.db', 'r')
+    guest_dict = db['Seats']
+    db.close()
+
+    guest_list = []
+    for key in guest_dict:
+        seat = guest_dict.get(key)
+        guest_list.append(seat)
+
+    return render_template('retrieveSeats.html', count=len(guest_list), guest_list=guest_list)
+
+
+@app.route("/updateSeats/<int:id>/", methods=['GET', 'POST'])
+def update_seats(id):
+    update_seats = SeatForm(request.form)
+    if request.method == 'POST' and update_seats.validate():
+        guest_dict = {}
+        db = shelve.open('databases/guest_storage.db', 'w')
+        guest_dict = db['Seats']
+
+        seat = guest_dict.get(id)
+        seat.set_name(update_seats.name.data)
+        seat.set_seat(update_seats.seat.data)
+
+        db['Seats'] = guest_dict
+        db.close()
+
+        return redirect(url_for('retrieve_seats'))
+    else:
+        guest_dict = {}
+        db = shelve.open('databases/guest_storage.db', 'r')
+        guest_dict = db['Seats']
+        db.close()
+
+        seat = guest_dict.get(id)
+        update_seats.name.data = seat.get_name()
+        update_seats.seat.data = seat.get_seat()
+
+        return render_template("updateSeats.html", form = update_seats)
+
+@app.route('/deleteSeats/<int:id>', methods=['POST'])
+def delete_seats(id):
+    guest_dict = {}
+    db = shelve.open('databases/guest_storage.db', 'w')
+    guest_dict = db['Seats']
+
+    guest_dict.pop(id)
+
+    db['Seats'] = guest_dict
+    db.close()
+
+    return redirect(url_for('retrieve_seats'))
 
 if __name__ == '__main__':
     app.run(debug=True)

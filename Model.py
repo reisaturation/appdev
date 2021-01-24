@@ -67,7 +67,7 @@ def get_user(userid):
     except IOError:
         print("Error opening user.db")
     except:
-        print("Unknown error occured fetching user.db")
+        print("Unknown error occurred fetching user.db")
     else:
         if userid in db.keys():
             user = db.get(userid)
@@ -82,8 +82,95 @@ def update_user(user_obj):
     except IOError:
         print("Error opening user.db")
     except:
-        print("Unknown error occured fetching user.db")
+        print("Unknown error occurred fetching user.db")
     else:
         if user_obj.get_user_id() in db.keys():
             db[user_obj.get_user_id()] = user_obj
             db.close()
+
+# #This is where we access the cart
+# class Cart():
+#
+#     count = 0
+#
+#     food_details = {'foodid1':["PRIME STEER RIBEYE", 28.90],
+#             'foodid2':["IEAT SUPER BURGER", 28.90]
+#             }
+#
+#     def __init__(self, food_id, food_quantity):
+#         self.__food_id = food_id
+#         self.__dict__food_details = Cart.food_details
+#         self.__food_quantity = food_quantity
+#         self.__food_count = Cart.count
+#
+# #Food accessor method
+#     def get_food_id(self):
+#         return self.__food_id
+#
+#     def get_food_quantity(self):
+#         return self.__food_quantity
+#
+#     def get_food_details(self):
+#         return self.__dict__food_details
+#
+#     def get_total_price(self):
+#         return self.__dict__food_details[self.__food_id[1]] * self.__food_quantity
+#
+# #Set food method
+#     def set_food_quantity(self, food_quantity):
+#         self.__food_quantity = food_quantity
+
+class Food():
+    def __init__(self, name, description, price, picture):
+        self.__name = name
+        self.__description = description
+        self.__price = price
+        self.__picture = picture
+
+    def set_name(self, name):
+        self.__name = name
+    def set_description(self, description):
+        self.__description = description
+    def set_price(self, price):
+        self.__price = price
+    def set_picture(self, picture):
+        self.__picture = picture
+
+    def get_name(self):
+        return self.__name
+    def get_description(self):
+        return self.__description
+    def get_price(self):
+        return self.__price
+    def get_picture(self):
+        return self.__picture
+
+    def __str__(self):
+        return ' name:{} \n description:{} \n price:{} \n picture:{}'.format(self.get_name(), self.get_description(), self.__price, self.__picture)
+
+class Seat():
+    count_id = 0
+
+    def __init__(self, name, seat):
+        Seat.count_id += 1
+        self.__user_id = Seat.count_id
+        self.__name = name
+        self.__seat = seat
+
+    def get_name(self):
+        return self.__name
+
+    def get_user_id(self):
+        return self.__user_id
+
+    def get_seat(self):
+        return self.__seat
+
+    def set_user_id(self, user_id):
+        self.__user_id = user_id
+
+    def set_name(self, name):
+        self.__name = name
+
+    def set_seat(self, seat):
+        self.__seat = seat

@@ -26,6 +26,10 @@
       margin-right:1em;
     }
 
+    .navbtn{
+    margin-right:1.5em;
+    color:white;
+    }
 
 </style>
 <!-- Navigation -->
@@ -41,6 +45,16 @@
   </div>
 
 {% if session['loggedin'] == True%}
+    <a href="/aston/cart" class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light" type="button">
+        <img style="width:24px; height:24px;" src="../../static/images/cart.png">View Cart
+    </a>
+    <a href="/reserveseat" type="button"
+          class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Seat Plan</a>
+    <a href="/retrieveSeats" type="button"
+          class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light"> Retrieve Seats</a>
+
+    <a href="/" type="button"
+        class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Select Restaurants</a>
     <img class="icon" src=/static/images/profilepictures/{{session['profile_pic']}}>
     <div class="widget-header dropdown">
         <a href="#" class="" data-toggle="dropdown" data-offset="20,10">

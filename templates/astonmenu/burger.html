@@ -1,0 +1,35 @@
+{% extends "/base.html"%}
+{% block content %}
+<style>
+    .sidenav a{
+        display: block;
+        padding: 2px 10px 32px;
+        color:white;
+        text-decoration: none;
+    }
+
+    .sidenav div a {
+        font-weight: bold;
+        font-size:24px;
+    }
+
+    div a:hover{
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    #diva{
+        float: left;
+        background-color:#DC143C;
+        margin-right:3em;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div id="diva" class="sidenav col-3">
+    <a href="/aston">About</a>
+    <a href="#">Rating & Review</a>
+    <a href="/aston/menu">Menu</a>
+    <a href="/aston/menu/signature">Signature</a>
+    <a href="/aston/menu/burger">Burger</a>
+    <a href="/aston/menu/chicken">Grillwork Chicken</a>
+    <a href="/aston/menu/sidedish">Hot Side Dishes</a>
+</div>
+{% endblock %}

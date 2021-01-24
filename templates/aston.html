@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% block title %}EatSafe - Home{% endblock %}
+{% extends "/base.html" %}
+{% block title %}EatSafe - AstonHome{% endblock %}
 {% block content %}
 <style>
     .sidenav a{
@@ -36,11 +36,11 @@
 <div id="diva" class="sidenav col-3">
     <a href="#">About</a>
     <a href="#">Rating & Review</a>
-    <a href="#">Menu</a>
-    <a href="#">Signature</a>
-    <a href="#">Burger</a>
-    <a href="#">Grillwork Chicken</a>
-    <a href="#">Hot Side Dishes</a>
+    <a href="/aston/menu">Menu</a>
+    <a href="/aston/menu/signature">Signature</a>
+    <a href="/aston/menu/burger">Burger</a>
+    <a href="/aston/menu/chicken">Grillwork Chicken</a>
+    <a href="/aston/menu/sidedish">Hot Side Dishes</a>
 </div>
 <div id="divb" class="col-8">
     <div>
@@ -68,6 +68,11 @@
     <p> This is a list of our ongoing promotions.</p>
 
     <h1>Reviews</h1>
+    <img class="icon" src=/static/images/profilepictures/{{session['profile_pic']}}>
+    {{session['username']}}
+    <textarea name="comments" id="comments" style="width:600px;height:50px;font-family:sans-serif;font-size:14px;">
+    </textarea>
+    <input type="submit" value="Add to comments">
 </div>
 {% endblock %}
 

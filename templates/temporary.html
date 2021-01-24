@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Seating Plan{% endblock %}
+
+{% block content %}
+{% from "components/formhelper.html" import render_field %}
+<div class="container">
+    <h1>Select Seat</h1>
+
+    <h2>It is currently <span id="datetime"></span></h2>
+    <img src="https://puu.sh/H5NQx.png" alt="seating plan">
+    <form action="{{ url_for('reserveseat') }}" method="post">
+        <div class ="form-group">
+            {{ render_field(form.seat, class="form-check", style="list-style-type:none") }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.name, class="form-control", placeholder="Enter Name") }}
+        </div>
+        <input type="submit"/>
+    </form>
+</div>
+
+<script>
+var dt = new Date();
+document.getElementById("datetime").innerHTML = (("0"+dt.getDate()).slice(-2)) +"."+ (("0"+(dt.getMonth()+1)).slice(-2)) +"."+ (dt.getFullYear()) +"," + " "+ (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2));
+</script>
+{% endblock %}
