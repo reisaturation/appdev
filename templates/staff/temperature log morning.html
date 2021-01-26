@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Temperature records{% endblock %}
+
+{% block content %}
+<h1 class="display-4">Retrieve Temperature</h1>
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Temperature</th>
+      </tr>
+    </thead>
+    <tbody>
+    {%for key in temps_list%}
+    <tr>
+        <td>{{ key }}</td>
+    </tr>
+    {%endfor%}
+    </tbody>
+  </table>
+</div>
+{%endblock%}
+
+
