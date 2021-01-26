@@ -11,13 +11,43 @@
     <form action="{{ url_for('reserveseat') }}" method="post">
         <div class ="form-group">
             {{ render_field(form.seat, class="form-check", style="list-style-type:none") }}
+            {{ render_field(form.time, class="form-check", style="list-style-type:none") }}
         </div>
-        <div class="form-group">
+        <div class="form-group" style="width:150px;">
             {{ render_field(form.name, class="form-control", placeholder="Enter Name") }}
         </div>
-        <input type="submit"/>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"> Submit </button>
+
+        <!-- Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirm Reservation</h4>
+                        <button type="button" class="close" data-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        Confirm reservation?
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <input type="submit" value="Confirm" class="btn btn-danger">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+
+                </div>
+              </div>
+            </div>
     </form>
 </div>
+
+
 
 <script>
 var dt = new Date();

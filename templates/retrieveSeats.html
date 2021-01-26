@@ -18,7 +18,9 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Time</th>
                 <th>Seat</th>
+
             </tr>
         </thead>
         <tbody>
@@ -26,6 +28,7 @@
             <tr>
                 <td>{{seat.get_user_id()}}</td>
                 <td>{{seat.get_name()}}</td>
+                <td>{{seat.get_time()}}</td>
                 <td>{{seat.get_seat()}}</td>
 
                 <td><a href="/updateSeats/{{seat.get_user_id()}}"  class="btn btn-warning">Update</a></td>
