@@ -368,7 +368,8 @@ def delete_seats(id):
 
 
 
-#Staff Temperature record
+# Staff Temperature record
+
 @app.route("/staff/morning", methods=['GET', 'POST'])
 def create_morning():
     m_tem = TemperatureMorning(request.form)

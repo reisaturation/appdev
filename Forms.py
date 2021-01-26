@@ -30,6 +30,10 @@ class EditForm(Form):
                                                     max=150), validators.DataRequired(), validators.email()])
     username = StringField('Username', [validators.Length(min=8
                                                           ), validators.DataRequired()])
+
+class Payment(Form):
+    billing_address = StringField('Billing Address', [validators.Length(min=1, max=150), validators.DataRequired()])
+
 class SeatForm(Form):
     seat = SelectField('Choose your seat here: ', choices=[('1', '1'), ('2', '2'), ('3', '3')], default='')
     name = StringField('Name: ', [validators.Length(min=1, max=150), validators.DataRequired()])
