@@ -45,8 +45,12 @@
   </div>
 
 {% if session['loggedin'] == True%}
-    <a href="/aston/cart" class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light" type="button">
-        <img style="width:24px; height:24px;" src="../../static/images/cart.png">View Cart
+    <a href="/aston/cart" class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light" type="button" style="width:160px;">
+        <div class="row">
+            <div class="col">
+                <img style="width:24px; height:24px; margin-left:-1em;" src="../../static/images/cart.png">View Cart
+            </div>
+        </div>
     </a>
     <a href="/reserveseat" type="button"
           class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Seat Plan</a>

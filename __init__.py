@@ -58,7 +58,7 @@ def login():
                     # db.close()
                     #checking is user is staff, if so redirect them to the staff interface
                     # staffdb = shelve.open('databases/staff.db','r')
-                    # if session['user_id'] in tutordb:
+                    # if session['user_id'] in staffdb:
                     #     session['isstaff'] = True
                     # staffdb.close()
                     # try:
@@ -192,6 +192,8 @@ def editprofile():
             return redirect(url_for('viewprofile'))
         return render_template('profile/editprofile.html', form=form)
 
+# Cart
+
 @app.route("/aston/menu")
 def menu():
     return render_template('astonmenu/menu.html')
@@ -214,11 +216,8 @@ def signature():
                 session['cart'][name][2] = "{:.2f}".format(float(session['cart'][name][1]) * float(session['cart'][name][0]))
             else:
                 session['cart'][name] = [cost, 1, cost, picture]
-            flash('Added')
-
+            flash('has been added', name)
     return render_template('astonmenu/signature.html', form= form)
-
-
 
 
 @app.route("/aston/menu/burger")
@@ -233,15 +232,38 @@ def chicken():
 def sidedish():
     return render_template('astonmenu/sidedish.html')
 
-@app.route("/aston/cart")
+@app.route("/aston/cart", methods=["POST","GET"])
 def viewcart():
     sub_total = 0
     delivery = "{:.2f}".format(4)
+
+    if request.method == "POST":
+        for item in session['cart']:
+            if request.form.get("add_item"):
+                quantity = int(request.form.get("add_item"))
+                quantity += 1
+                session['cart'][item][1] = quantity
+                item_price = float(session['cart'][item][0]) * float(session['cart'][item][1])
+                session['cart'][item][2] = "{:.2f}".format(item_price)
+
+            if request.form.get("minus_item"):
+                quantity = int(request.form.get("minus_item"))
+                if quantity > 1:
+                    quantity -= 1
+                    session['cart'][item][1] = quantity
+                    item_price = float(session['cart'][item][0]) * float(session['cart'][item][1])
+                    session['cart'][item][2] = "{:.2f}".format(item_price)
+                else:
+                    session['cart'][item][1] = 1
+                    session['cart'][item][2] = session['cart'][item][0]
+
     for item in session['cart']:
         sub_total += float(session['cart'][item][2])
     sub_total = "{:.2f}".format(sub_total)
     total_cost = "{:.2f}".format(float(delivery) + float(sub_total))
-    return render_template('astonmenu/cart.html', sub_total=sub_total, delivery=delivery, total_cost= total_cost)
+
+    return render_template('astonmenu/cart.html', sub_total=sub_total, delivery=delivery, total_cost=total_cost)
+
 
 @app.route("/aston/cart/<id>", methods = ["POST"])
 def deleteitem(id):
@@ -249,6 +271,14 @@ def deleteitem(id):
     cart.pop(id)
     session['cart'] = cart
     return redirect(url_for('viewcart'))
+
+
+
+
+
+
+
+# Seating Plan
 
 """@app.route("/seatplan")
 def seatplan():

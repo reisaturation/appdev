@@ -20,6 +20,7 @@
         float: left;
         background-color:#DC143C;
         margin-right:3em;
+        margin-left:-1em;
     }
     .container{
     width:1000px;
@@ -29,7 +30,7 @@
 
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div id="diva" class="sidenav col-3">
+<div id="diva" class="sidenav col-2" style="font-size:18px;">
     <a href="/aston">About</a>
     <a href="#">Rating & Review</a>
     <a href="/aston/menu">Menu</a>
@@ -39,35 +40,37 @@
     <a href="/aston/menu/sidedish">Hot Side Dishes</a>
 </div>
 <form class="container" method="POST">
-    <img style="padding-top:1em;" src="../../static/images/aston/aston4.jpg">
-    <div>
-        <h2>PRIME STEER RIBEYE
-            <small style="color:red; font-size:14px;">$28.90
-                <button type="submit" name="add_cart" value='PRIME_STEER_RIBEYE,28.90'>Add to Cart</button></small>
-        </h2>
-            <p>ASTONS Prime Steer Ribeye is our customers' first choice. Not
-                only value-for-money, but value for tummy! Tender - with a natural bite,
-                in medium doneness it maintains a gentle trickle of moist natural steak juice.
-                A wonderful dining experience - so satisfying thorough each cut portion.
-            </p>
-        {% with messages = get_flashed_messages() %}
+    <br>
+        {% with messages = get_flashed_messages(with_categories = True) %}
             {% if messages %}
-                {% for message in messages %}
+                {% for category, message in messages %}
                     <div class="alert alert-info alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        {{message}}
+                        1&times; {{category}} {{message}}
                     </div>
 
                 {% endfor %}
 
             {% endif %}
           {% endwith %}
+    <img style="padding-top:1em;" src="../../static/images/aston/aston4.jpg">
+    <div>
+        <h2>PRIME STEER RIBEYE
+            <small style="color:red; font-size:14px;">$28.90
+                <button type="submit" name="add_cart" class="btn btn-primary" value='PRIME_STEER_RIBEYE,28.90'>Add to Cart</button></small>
+        </h2>
+            <p>ASTONS Prime Steer Ribeye is our customers' first choice. Not
+                only value-for-money, but value for tummy! Tender - with a natural bite,
+                in medium doneness it maintains a gentle trickle of moist natural steak juice.
+                A wonderful dining experience - so satisfying thorough each cut portion.
+            </p>
+
     </div>
     <img style="padding-top:1em;" src="../../static/images/aston/aston5.jpg">
     <div>
         <h2>IEAT SUPER BURGER
             <small style="color:red; font-size:14px;">$28.90
-                <button type="submit" name="add_cart" value='IEAT_SUPER_BURGER,28.90'>Add to Cart</button></small>
+                <button type="submit" class="btn btn-primary" name="add_cart" value='IEAT_SUPER_BURGER,28.90'>Add to Cart</button></small>
         </h2>
             <p>ASTONS massive ieat Super Burger is named after Singapore famous Blogger Dr Leslie.
                 The big patty is grilled to perfection - Juicy and Moist! Combined with the crispy onion frost,
@@ -76,5 +79,6 @@
             </p>
 
     </div>
+
 </form>
 {% endblock %}
