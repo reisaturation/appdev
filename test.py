@@ -1,11 +1,11 @@
 from Model import *
 import shelve
 
-# db = shelve.open('databases/user.db')
-# for user in db:
-#     userObj = db[user]
-#     print(userObj)
-# db.close()
+db = shelve.open('databases/user.db')
+for user in db:
+    userObj = db[user]
+    print(userObj)
+db.close()
 
 # db = shelve.open('databases/reviews.db')
 
@@ -24,7 +24,11 @@ for food in db:
 
 db.close()
 
-
+db = shelve.open('databases/temperature.db')
+for temp in db:
+    tempObj = db[temp]
+    print(tempObj)
+    print()
 
 
 
