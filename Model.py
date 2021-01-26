@@ -148,6 +148,8 @@ class Food():
     def __str__(self):
         return ' name:{} \n description:{} \n price:{} \n picture:{}'.format(self.get_name(), self.get_description(), self.__price, self.__picture)
 
+
+# Setting and Retrieving Seating Plans
 class Seat():
     count_id = 0
 
@@ -174,3 +176,20 @@ class Seat():
 
     def set_seat(self, seat):
         self.__seat = seat
+
+# Setting and retrieving temperature
+
+
+class TemperatureM():
+
+    def __init__(self, temperaturemorning):
+        self.__temperaturemorning = temperaturemorning
+
+    def get_temperaturemorning(self):
+        return self.__temperaturemorning
+
+    def set_temperaturemorning(self,temperaturemorning):
+         self.__user_temperaturemorning = temperaturemorning
+
+    def _str_(self):
+        return ' temperaturemorning: {} '.format(self.get_temperaturemorning())

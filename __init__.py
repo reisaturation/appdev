@@ -366,5 +366,39 @@ def delete_seats(id):
 
     return redirect(url_for('retrieve_seats'))
 
+
+
+#Staff Temperature record
+@app.route("/staff/morning", methods=['GET', 'POST'])
+def create_morning():
+    m_tem = TemperatureMorning(request.form)
+    if request.method == 'POST' and m_tem.validate():
+        temps_dict = {}
+        db = shelve.open('databases/temperature.db', 'w')
+        try:
+            temps_dict = db['temps']
+        except:
+            print("Error in retrieving temperature from temperature.db.")
+        temperature_m = TemperatureM(m_tem.temperature_morning.data)
+        temps_dict[temperature_m.get_temperaturemorning()] = temperature_m
+        db['temps'] = temps_dict
+        print(db['temps'])
+        db.close()
+
+    return render_template("staff/morningtemp.html", form=m_tem)
+
+@app.route('/staff/retrievetemps')
+def retrieve_temps():
+    temps_dict = {}
+    db = shelve.open('databases/temperature.db', 'r')
+    temps_dict = db['temps']
+    db.close()
+
+    temps_list = []
+    for key in temps_dict:
+        temps_list.append(key)
+
+    return render_template('staff/temperature log morning.html', count=len(temps_list), temps_list=temps_list)
+
 if __name__ == '__main__':
     app.run(debug=True)
