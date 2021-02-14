@@ -26,6 +26,38 @@ def home():
 def aston():
     return render_template("aston.html")
 
+@app.route("/admin/login", methods=["GET","POST"])
+def admin_login():
+    adminform = AdminForm(request.form)
+    if request.method == "POST" and adminform.validate():
+        db = shelve.open('databases/admin.db', 'r')
+        username = request.form['username'].lower()
+        password = request.form['password']
+        secretcode = request.form['code']
+        for admin in db:
+            admin = db[admin]
+            if admin.get_username() == username and pbkdf2_sha256.verify(password, admin.get_user_pw()) == True and secretcode == admin.get_code():
+                session['adminlogin'] = True
+                db.close()
+                return redirect(url_for('adminhome'))
+
+    return render_template("admin/login.html", form=adminform)
+
+@app.route('/admin/logout')
+def admin_logout():
+    if session.get('adminlogin') == True:
+        session.clear()
+        return redirect(url_for('adminhome'))
+    else:
+        return redirect(url_for('adminhome'))
+
+@app.route("/admin/home")
+def adminhome():
+    if session.get('adminlogin') == True:
+        return render_template('admin/home.html')
+    else:
+        return redirect(url_for('admin_login'))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if session.get('loggedin') == True:
@@ -56,11 +88,12 @@ def login():
                     # if session['user_id'] in db:
                     #     session['verifying'] = True
                     # db.close()
-                    #checking is user is staff, if so redirect them to the staff interface
+                    #checking if user is staff, if so redirect them to the staff interface
                     # staffdb = shelve.open('databases/staff.db','r')
                     # if session['user_id'] in staffdb:
                     #     session['isstaff'] = True
                     # staffdb.close()
+
                     # try:
                     #     if request.form['remember']:
                     #         session['remember'] = True
@@ -196,16 +229,23 @@ def editprofile():
 
 @app.route("/aston/menu")
 def menu():
-    return render_template('astonmenu/menu.html')
+    return render_template('aston/menu.html')
 
 
 @app.route("/aston/menu/signature", methods = ["POST","GET"])
 def signature():
+    db = shelve.open('databases/food.db', 'r')
+    food_list = {}
+    for item in db:
+        food_list[db[item].get_name()] = [db[item].get_description(), "{:.2f}".format(db[item].get_price()), db[item].get_picture()]
+    db.close()
+
     if request.method == "POST":
         if session.get('loggedin') != True:
             return redirect(url_for('login'))
         else:
             item = request.form['add_cart'].split(',')
+            print(item)
             name = item[0]
             cost = "{:.2f}".format(float(item[1]))
             db = shelve.open('databases/food.db', 'r')
@@ -217,62 +257,96 @@ def signature():
             else:
                 session['cart'][name] = [cost, 1, cost, picture]
             flash('has been added', name)
-    return render_template('astonmenu/signature.html', form= form)
+    return render_template('aston/signature.html', form= form, foodlist=food_list)
 
 
 @app.route("/aston/menu/burger")
 def burger():
-    return render_template('astonmenu/burger.html')
+    return render_template('aston/burger.html')
 
 @app.route("/aston/menu/chicken")
 def chicken():
-    return render_template('astonmenu/chicken.html')
+    return render_template('aston/chicken.html')
 
 @app.route("/aston/menu/sidedish")
 def sidedish():
-    return render_template('astonmenu/sidedish.html')
+    return render_template('aston/sidedish.html')
 
 @app.route("/aston/cart", methods=["POST","GET"])
 def viewcart():
     sub_total = 0
     delivery = "{:.2f}".format(4)
 
-    if request.method == "POST":
-        for item in session['cart']:
-            if request.form.get("add_item"):
-                quantity = int(request.form.get("add_item"))
-                quantity += 1
-                session['cart'][item][1] = quantity
-                item_price = float(session['cart'][item][0]) * float(session['cart'][item][1])
-                session['cart'][item][2] = "{:.2f}".format(item_price)
-
-            if request.form.get("minus_item"):
-                quantity = int(request.form.get("minus_item"))
-                if quantity > 1:
-                    quantity -= 1
-                    session['cart'][item][1] = quantity
-                    item_price = float(session['cart'][item][0]) * float(session['cart'][item][1])
-                    session['cart'][item][2] = "{:.2f}".format(item_price)
-                else:
-                    session['cart'][item][1] = 1
-                    session['cart'][item][2] = session['cart'][item][0]
-
     for item in session['cart']:
         sub_total += float(session['cart'][item][2])
     sub_total = "{:.2f}".format(sub_total)
     total_cost = "{:.2f}".format(float(delivery) + float(sub_total))
 
-    return render_template('astonmenu/cart.html', sub_total=sub_total, delivery=delivery, total_cost=total_cost)
+    return render_template('aston/cart.html', sub_total=sub_total, delivery=delivery, total_cost=total_cost)
+
+@app.route("/aston/cart/<action>", methods=["POST","GET"])
+def editcart(action):
+    if action == "plus":
+        name = request.form["add_item"]
+        cart = session['cart']
+        quantity = cart[name][1]
+        quantity += 1
+        cart[name][1] = quantity
+        item_price = float(cart[name][0]) * float(cart[name][1])
+        cart[name][2] = "{:.2f}".format(item_price)
+        session['cart'] = cart
+
+    if action == "minus":
+        name = request.form.get("minus_item")
+        cart = session['cart']
+        quantity = cart[name][1]
+        if quantity > 1:
+            quantity -= 1
+            cart[name][1] = quantity
+            item_price = float(cart[name][0]) * float(cart[name][1])
+            cart[name][2] = "{:.2f}".format(item_price)
+        else:
+            cart[name][1] = 1
+            cart[name][2] = cart[name][0]
+        session['cart'] = cart
+
+    return redirect(url_for('viewcart'))
 
 
-@app.route("/aston/cart/<id>", methods = ["POST"])
+
+@app.route("/aston/carts/<id>", methods = ["POST"])
 def deleteitem(id):
     cart = session['cart']
     cart.pop(id)
     session['cart'] = cart
     return redirect(url_for('viewcart'))
 
+@app.route("/aston/payment", methods =["GET","POST"])
+def payment():
+    paymentform = Payment(request.form)
+    db = shelve.open("databases/user.db", 'w')
+    if request.method == "POST" and paymentform.validate():
+        block_no = request.form['block_number']
+        postal_code = request.form['postal_code']
+        user_id = session['user_id']
+        user = db[user_id]
+        user.set_block_number(block_no)
+        user.set_postal_code(postal_code)
+        db.close()
 
+    return render_template("aston/payment.html", form=paymentform)
+
+@app.route('/aston/receipt')
+def receipt():
+    sub_total = 0
+    delivery = "{:.2f}".format(4)
+
+    for item in session['cart']:
+        sub_total += float(session['cart'][item][2])
+    sub_total = "{:.2f}".format(sub_total)
+    total_cost = "{:.2f}".format(float(delivery) + float(sub_total))
+
+    return render_template('aston/receipt.html', sub_total=sub_total, delivery=delivery, total_cost=total_cost)
 
 
 

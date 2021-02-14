@@ -1,0 +1,19 @@
+{% from 'components/formhelper.html' import render_field %}
+{%extends "/admin/base.html"%}
+{%block content%}
+<a style="text-decoration:none; color:black; font-size:24px; margin-left:2em;" href="/"><img src="../static/images/Back.png" style="width:24px;height:24px;">  Back</a>
+<div class="container">
+    <form method="POST" action="" enctype="multipart/form-data" >
+        <div style="margin-top:5em;" class="form-group">
+            {{ render_field(form.username, class="form-control", placeholder="Enter username") }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.password, class="form-control", placeholder="Enter password") }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.code, class="form-control", placeholder="Enter code") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Log in</button>
+    </form>
+</div>
+{%endblock%}

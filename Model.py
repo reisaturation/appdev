@@ -2,6 +2,24 @@ import shelve
 import uuid
 from passlib.hash import pbkdf2_sha256
 
+class Admin():
+    def __init__(self, username, user_pw):
+        self.__username = username
+        self.__user_pw = pbkdf2_sha256.hash(user_pw)
+        self.__code = 's4fEc0dE'
+
+    def get_username(self):
+        return self.__username
+
+    def get_user_pw(self):
+        return self.__user_pw
+
+    def get_code(self):
+        return self.__code
+
+    def __str__(self):
+        return 'username: {} \n password:{} \n'.format(self.__username,self.get_user_pw())
+
 class User():
     def __init__(self, user_email, username, user_pw, user_firstname, user_lastname):
         self.__user_id = uuid.uuid4().hex
@@ -11,6 +29,10 @@ class User():
         self.__user_firstname = user_firstname
         self.__user_lastname = user_lastname
         self.__user_profile_pic = "avatar.jpg"
+        self.__block_number = ''
+        self.__postal_code = ''
+        self.__review = ''
+        self.__rating = ''
 
 #User_Model Accessor
 
@@ -38,6 +60,18 @@ class User():
     def get_user_profile_pic(self):
         return self.__user_profile_pic
 
+    def get_block_number(self):
+        return self.__block_number
+
+    def get_postal_code(self):
+        return self.__postal_code
+
+    def get_review(self):
+        return self.__review
+
+    def get_rating(self):
+        return self.__rating
+
 #User set methods
 
     def set_user_email(self,email):
@@ -54,6 +88,18 @@ class User():
 
     def set_user_profile_pic(self,profile_pic):
         self.__user_profile_pic = profile_pic
+
+    def set_block_number(self,block_number):
+        self.__block_number = block_number
+
+    def set_postal_code(self,postal_code):
+        self.__postal_code = postal_code
+
+    def set_review(self, review):
+        self.__review = review
+
+    def set_rating(self, rating):
+        self.__rating = rating
 
 
     def __str__(self):

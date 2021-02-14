@@ -53,32 +53,18 @@
 
             {% endif %}
           {% endwith %}
-    <img style="padding-top:1em;" src="../../static/images/aston/aston4.jpg">
+
+    {% for item in foodlist%}
+    <img style="padding-top:1em;" src="../../static/images/aston/{{foodlist[item][2]}}">
     <div>
-        <h2>PRIME STEER RIBEYE
-            <small style="color:red; font-size:14px;">$28.90
-                <button type="submit" name="add_cart" class="btn btn-primary" value='PRIME_STEER_RIBEYE,28.90'>Add to Cart</button></small>
+        <h2>{{item.replace('_',' ')}}
+            <small style="color:red; font-size:14px;">${{foodlist[item][1]}}
+                <button type="submit" name="add_cart" class="btn btn-primary" value='{{item}},{{foodlist[item][1]}}'>Add to Cart</button></small>
         </h2>
-            <p>ASTONS Prime Steer Ribeye is our customers' first choice. Not
-                only value-for-money, but value for tummy! Tender - with a natural bite,
-                in medium doneness it maintains a gentle trickle of moist natural steak juice.
-                A wonderful dining experience - so satisfying thorough each cut portion.
-            </p>
+            <p>{{foodlist[item][0]}}</p>
 
     </div>
-    <img style="padding-top:1em;" src="../../static/images/aston/aston5.jpg">
-    <div>
-        <h2>IEAT SUPER BURGER
-            <small style="color:red; font-size:14px;">$28.90
-                <button type="submit" class="btn btn-primary" name="add_cart" value='IEAT_SUPER_BURGER,28.90'>Add to Cart</button></small>
-        </h2>
-            <p>ASTONS massive ieat Super Burger is named after Singapore famous Blogger Dr Leslie.
-                The big patty is grilled to perfection - Juicy and Moist! Combined with the crispy onion frost,
-                streaky bacon, ASTONS special secret BBQ sauce, crunchy romaine lettuce, tomatoes,
-                grilled bacon and cheddar cheese. This is easily the best tasting, value for money Burger in town.
-            </p>
-
-    </div>
+    {% endfor %}
 
 </form>
 {% endblock %}

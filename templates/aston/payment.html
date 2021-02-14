@@ -1,0 +1,56 @@
+{% extends "/base.html"%}
+{% from 'components/formhelper.html' import render_field %}
+{% block content%}
+
+<style>
+
+     #backbtn{
+      text-decoration:none;
+      color:black;
+      font-size:18px;
+      margin-left:1em;
+    }
+
+    #backbtn img {
+      width:18px;
+      height:18px;
+      margin-right:5px;
+      margin-top:1em;
+      margin-bottom:1em;
+    }
+
+    a {
+    color:white;
+    }
+
+    a:hover{
+    color:white;
+    text-decoration:none;
+    }
+
+</style>
+
+<div>
+    <a id="backbtn" href="/aston/cart"><img src="../static/images/Back.png">Back</a>
+
+<!--    Payment Information-->
+    <h4 class="modal-title"><strong>Payment Information</strong></h4>
+    <form method="POST" action="" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                {{ render_field(form.block_number, class="form-control", placeholder="Eg.#12-123") }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                {{ render_field(form.postal_code, class="form-control", placeholder="Eg.530123") }}
+            </div>
+        </div>
+
+    <button style="float:right; margin-right:20em; margin-top:2em;" type="submit" class="btn btn-secondary" ><a href="/aston/receipt">Order Now</a></button>
+    </form>
+
+</div>
+{% endblock %}

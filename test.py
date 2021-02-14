@@ -1,11 +1,11 @@
 from Model import *
-import shelve
-
-db = shelve.open('databases/user.db')
-for user in db:
-    userObj = db[user]
-    print(userObj)
-db.close()
+# import shelve
+#
+# db = shelve.open('databases/user.db')
+# for user in db:
+#     userObj = db[user]
+#     print(userObj)
+# db.close()
 
 # db = shelve.open('databases/reviews.db')
 
@@ -15,22 +15,31 @@ db.close()
 # db['PRIME_STEER_RIBEYE'] = food1
 # db['IEAT_SUPER_BURGER'] = food2
 # db.close()
+#
+# db = shelve.open('databases/food.db')
+# for food in db:
+#     foodObj = db[food]
+#     print(foodObj)
+#     print()
+#
+# db.close()
 
-db = shelve.open('databases/food.db')
-for food in db:
-    foodObj = db[food]
-    print(foodObj)
-    print()
+# db = shelve.open('databases/temperature.db')
+# for temp in db:
+#     tempObj = db[temp]
+#     print(tempObj)
+#     print()
 
+# db = shelve.open('databases/admin.db', 'w')
+# admin1 = Admin('astonadmin','seCret4ston')
+# db['main'] = admin1
+# db.close()
+
+db = shelve.open('databases/admin.db')
+for admin in db:
+    adminObj = db[admin]
+    print(adminObj)
 db.close()
-
-db = shelve.open('databases/temperature.db')
-for temp in db:
-    tempObj = db[temp]
-    print(tempObj)
-    print()
-
-
 
 
 

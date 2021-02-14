@@ -1,0 +1,65 @@
+{%extends "/base.html"%}
+{%block content%}
+
+<style>
+    a {
+    color:white;
+    }
+
+    a:hover{
+    color:white;
+    text-decoration:none;
+    }
+</style>
+
+<div class="container" style="width:498px; border:double; border-radius:10%; padding-top:1em; padding-bottom:1em; margin-top:2em;">
+<div style="padding-bottom:5px;">
+    <h4 class="modal-title" style="font-weight:bold; text-align:center;">Receipt</h4>
+    {% for food in session['cart']%}
+    <br>
+    <div class="row">
+        <div class="col-md-1">
+              </div>
+        <div class="col-md-1" style="font-size:20px; color:red; font-weight:500;">
+            {{session['cart'][food][1]}}&times;
+        </div>
+        <div class="col-md-7" style="font-size:18px;">
+            {{food}}
+        </div>
+        <div class="col-md-2" style="color:red; font-size:14px; font-weight:600">
+            ${{session['cart'][food][2]}}
+        </div>
+
+    </div>
+</div>
+{%endfor%}
+<hr style="height:5px;">
+<div class="row" style="margin:0; font-weight:500; padding-bottom:5px;">
+    <div style="margin-left:3em;" class="col-md-7">Sub-Total:</div>
+    <div class="col-md-2">
+        <small style="color:red; font-size:16px;">${{sub_total}}</small>
+    </div>
+</div>
+
+<div class="row" style="margin:0; font-weight:500">
+    <div style="margin-left:3em;" class="col-md-7">Delivery Cost:</div>
+    <div class="col-md-2">
+        <small style="color:red; font-size:16px;">${{delivery}}</small>
+    </div>
+</div>
+
+<div class="row" style="margin:0; padding-top:1em; text-align:center; font-weight:750; font-size:20px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-4" >Total Cost:</div>
+    <div class="col-md-4" style="color:red">${{total_cost}}</div>
+    <div class="col-md-2"></div>
+</div>
+<div style="color:blue; text-align:center; padding-top:1em; font-weight:750; font-size:20px;">
+    <p>Payment Successful!</p>
+    <img src="../../static/images/paymentsuccessful.jpg">
+</div>
+    <button type="button" class="btn btn-dark" style="margin-left:0.5em; margin-top:1em;"><a href="/aston">Return to home</a></button>
+<br><br>
+</div>
+
+{%endblock%}
