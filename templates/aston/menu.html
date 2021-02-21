@@ -22,15 +22,132 @@
         margin-right:3em;
         margin-left:-1em;
     }
+    .container{
+    width:1000px;
+    height70px;
+    display:inline-block;
+    }
+
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div id="diva" class="sidenav col-2" style="font-size:18px;">
     <a href="/aston">About</a>
     <a href="#">Rating & Review</a>
     <a href="/aston/menu">Menu</a>
-    <a href="/aston/menu/signature">Signature</a>
-    <a href="/aston/menu/burger">Burger</a>
-    <a href="/aston/menu/chicken">Grillwork Chicken</a>
-    <a href="/aston/menu/sidedish">Hot Side Dishes</a>
+    <a href="#signature">Signature</a>
+    <a href="#burger">Burger</a>
+    <a href="#chicken">Grillwork Chicken</a>
+    <a href="#side">Hot Side Dishes</a>
 </div>
+<form class="container" method="POST">
+    <br>
+        {% with messages = get_flashed_messages(with_categories = True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        1&times; {{category}} {{message}}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+          {% endwith %}
+
+    <div id="#Signature"><h4>Signature</h4></div>
+    {% for item in foodlist%}
+        {% if foodlist[item][0] == "signature"%}
+            {% if item in signaturelist %}
+                <div class = "container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img style="padding-top:1em; width:250px; height:200px;" src="../../static/images/aston/{{signaturelist[item][2]}}">
+                        </div>
+                        <div class="col-md-8">
+                            <h2>{{item.replace('_',' ')}}
+                                <small style="color:red; font-size:14px;">${{signaturelist[item][1]}}</small>
+                            </h2>
+                            <p>{{signaturelist[item][0]}}</p>
+                            <button style="float:right;" type="submit" name="add_cart" class="btn btn-primary" value='{{item.replace(" ","_").upper()}},{{signaturelist[item][1]}}'>Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            {% endif %}
+        {% endif %}
+    {%endfor%}
+
+    <div id="burger"><h4>Burger</h4></div>
+
+    {% for item in foodlist %}
+        {% if foodlist[item][0] == "burger"%}
+            {% if item in burgerlist%}
+                <div class = "container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img style="padding-top:1em; width:250px; height:200px;" src="../../static/images/aston/{{burgerlist[item][2]}}">
+                        </div>
+                        <div class="col-md-8">
+                            <h2>{{item.replace('_',' ')}}
+                                <small style="color:red; font-size:14px;">${{burgerlist[item][1]}}</small>
+                            </h2>
+                            <p>{{burgerlist[item][0]}}</p>
+                            <button style="float:right;" type="submit" name="add_cart" class="btn btn-primary" value='{{item.replace(" ","_").upper()}},{{burgerlist[item][1]}}'>Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            {% endif %}
+        {% endif %}
+    {%endfor%}
+
+    <div id="chicken"><h4>Grillwork Chicken</h4></div>
+
+    {% for item in foodlist %}
+        {% if foodlist[item][0] == "chicken"%}
+            {% if item in chickenlist%}
+                <div class = "container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img style="padding-top:1em; width:250px; height:200px;" src="../../static/images/aston/{{chickenlist[item][2]}}">
+                        </div>
+                        <div class="col-md-8">
+                            <h2>{{item.replace('_',' ')}}
+                                <small style="color:red; font-size:14px;">${{chickenlist[item][1]}}</small>
+                            </h2>
+                            <p>{{chickenlist[item][0]}}</p>
+                            <button style="float:right;" type="submit" name="add_cart" class="btn btn-primary" value='{{item.replace(" ","_").upper()}},{{chickenlist[item][1]}}'>Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            {% endif %}
+        {% endif %}
+    {%endfor%}
+
+    <div id="side"><h4>Side Dish</h4></div>
+
+    {% for item in foodlist %}
+        {% if foodlist[item][0] == "side"%}
+            {% if item in sidelist%}
+                <div class = "container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img style="padding-top:1em; width:250px; height:200px;" src="../../static/images/aston/{{sidelist[item][2]}}">
+                        </div>
+                        <div class="col-md-8">
+                            <h2>{{item.replace('_',' ')}}
+                                <small style="color:red; font-size:14px;">${{sidelist[item][1]}}</small>
+                            </h2>
+                            <p>{{sidelist[item][0]}}</p>
+                            <button style="float:right;" type="submit" name="add_cart" class="btn btn-primary" value='{{item.replace(" ","_").upper()}},{{sidelist[item][1]}}'>Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            {% endif %}
+        {% endif %}
+    {%endfor%}
+
+</form>
 {% endblock %}

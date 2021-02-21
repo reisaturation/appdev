@@ -1,0 +1,76 @@
+{% extends "/admin/base.html"%}
+{% from 'components/formhelper.html' import render_field %}
+{% block content%}
+
+<h1 class="display-4">Retrieve Users</h1>
+<div>
+    {% if count == 0 %}
+    <p>There are no users.</p>
+    {% elif count == 1 %}
+    <p>There is 1 user.</p>
+    {% else %}
+    <p>There are {{ count }} users.</p>
+    {% endif %}
+</div>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Time</th>
+                <th>Seat</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for seat in guest_list %}
+            <tr>
+                <td>{{seat.get_user_id()}}</td>
+                <td>{{seat.get_name()}}</td>
+                <td>{{seat.get_time()}}</td>
+                <td>{{seat.get_seat()}}</td>
+
+                <td><a href="/updateSeats/{{seat.get_user_id()}}"  class="btn btn-warning">Update</a></td>
+                <td>
+                    <form action="{{url_for('delete_seats', id=seat.get_user_id())}}"  method="POST">
+<!--                        <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{seat.get_name()}}?') ;">-->
+                        <!-- Button to Open the Modal -->
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal_{{seat.get_user_id()}}">
+                          Delete
+                        </button>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="myModal_{{seat.get_user_id()}}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Delete Confirmation</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        Are you sure you want to delete {{seat.get_name()}}?
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <input type="submit" value="Delete" class="btn btn-danger">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    </div>
+
+                                </div>
+                              </div>
+                            </div>
+
+                  </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

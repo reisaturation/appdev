@@ -1,0 +1,244 @@
+{% extends "/admin/base.html"%}
+{% block content%}
+
+<style>
+    .category{
+    margin-top:2em;
+    margin-bottom:3em;
+    text-align:center
+    }
+
+    hr{
+    background-color:black;
+    }
+
+    #backbtn img {
+      width:18px;
+      height:18px;
+      margin-right:5px;
+      margin-top:1em;
+      margin-bottom:1em;
+    }
+
+    a {
+    color:black;
+    }
+
+    a:hover{
+    color:black;
+    text-decoration:none;
+    }
+
+</style>
+
+<div class="category"><hr><a style="margin-left:1em; float:left;" id="backbtn" href="/admin/home"><img src="../static/images/Back.png">Back</a><h4>Signature</h4><hr></div>
+
+    {% for item in foodlist%}
+        {% if foodlist[item][0] == "signature"%}
+            {% if item in signaturelist %}
+                <div class = "container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img style="padding-top:1em; width:250px; height:200px;" src="../../static/images/aston/{{signaturelist[item][3]}}">
+                        </div>
+                        <div class="col-md-8">
+                            <h5>{{signaturelist[item][0]}}
+                                <small style="color:red; font-size:14px;">${{signaturelist[item][2]}}</small>
+                            </h5>
+                            <p>{{signaturelist[item][1]}}</p>
+
+                            <form method="POST" action="{{url_for('delete_food', id = item)}}">
+                                <button style="float:right;"  type="button" name="deleteid" value="{{item}}" data-toggle="modal" data-target="#{{signaturelist[item][0].replace(' ','') }}" class="btn btn-danger">Delete</button>
+                                <div class="modal" id="{{signaturelist[item][0].replace(' ','') }}">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                      <!-- Modal Header -->
+                                      <div class="modal-header">
+                                        <h4 class="modal-title">Delete Confirmation</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      </div>
+                                      <!-- Modal body -->
+                                      <div class="modal-body">
+                                          Are you sure you want to delete {{item}}?
+                                      </div>
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <input type="submit" value="Delete" class="btn btn-danger">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </form>
+
+                            <form method="POST">
+                                <button style="float:right;" name="foodid" value="{{item}}" type="submit" class="btn btn-primary">Edit Dish</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            {% endif %}
+        {% endif %}
+    {%endfor%}
+
+<div class="category"><hr><h4>Burger</h4><hr></div>
+
+
+
+    {% for item in foodlist %}
+        {% if foodlist[item][0] == "burger"%}
+            {% if item in burgerlist%}
+                <div class = "container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img style="padding-top:1em; width:250px; height:200px;" src="../../static/images/aston/{{burgerlist[item][3]}}">
+                        </div>
+                        <div class="col-md-8">
+                            <h5>{{burgerlist[item][0]}}
+                                <small style="color:red; font-size:14px;">${{burgerlist[item][2]}}</small>
+                            </h5>
+                            <p>{{burgerlist[item][1]}}</p>
+
+                            <form method="POST" action="{{url_for('delete_food', id = item)}}">
+                                <button style="float:right;"  type="button" name="deleteid" value="{{item}}" data-toggle="modal" data-target="#{{burgerlist[item][0].replace(' ','') }}" class="btn btn-danger">Delete</button>
+                                <div class="modal" id="{{burgerlist[item][0].replace(' ','') }}">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                      <!-- Modal Header -->
+                                      <div class="modal-header">
+                                        <h4 class="modal-title">Delete Confirmation</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      </div>
+                                      <!-- Modal body -->
+                                      <div class="modal-body">
+                                          Are you sure you want to delete {{item}}?
+                                      </div>
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <input type="submit" value="Delete" class="btn btn-danger">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </form>
+
+                            <form method="POST">
+                                <button style="float:right;" name="foodid" value="{{item}}" type="submit" class="btn btn-primary">Edit Dish</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            {% endif %}
+        {% endif %}
+    {%endfor%}
+
+<div class="category"><hr><h4>Grillwork Chicken</h4><hr></div>
+
+    {% for item in foodlist %}
+        {% if foodlist[item][0] == "chicken"%}
+            {% if item in chickenlist%}
+                <div class = "container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img style="padding-top:1em; width:250px; height:200px;" src="../../static/images/aston/{{chickenlist[item][3]}}">
+                        </div>
+                        <div class="col-md-8">
+                            <h5>{{chickenlist[item][0]}}
+                                <small style="color:red; font-size:14px;">${{chickenlist[item][2]}}</small>
+                            </h5>
+                            <p>{{chickenlist[item][1]}}</p>
+
+                            <form method="POST" action="{{url_for('delete_food', id = item)}}">
+                                <button style="float:right;"  type="button" name="deleteid" value="{{item}}" data-toggle="modal" data-target="#{{chickenlist[item][0].replace(' ','') }}" class="btn btn-danger">Delete</button>
+                                <div class="modal" id="{{chickenlist[item][0].replace(' ','') }}">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                      <!-- Modal Header -->
+                                      <div class="modal-header">
+                                        <h4 class="modal-title">Delete Confirmation</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      </div>
+                                      <!-- Modal body -->
+                                      <div class="modal-body">
+                                          Are you sure you want to delete {{item}}?
+                                      </div>
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <input type="submit" value="Delete" class="btn btn-danger">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </form>
+
+                            <form method="POST">
+                                <button style="float:right;" name="foodid" value="{{item}}" type="submit" class="btn btn-primary">Edit Dish</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            {% endif %}
+        {% endif %}
+    {%endfor%}
+
+<div class="category"><hr><h4>Side Dish</h4><hr></div>
+
+    {% for item in foodlist %}
+        {% if foodlist[item][0] == "side"%}
+            {% if item in sidelist%}
+                <div class = "container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img style="padding-top:1em; width:250px; height:200px;" src="../../static/images/aston/{{sidelist[item][3]}}">
+                        </div>
+                        <div class="col-md-8">
+                            <h5>{{sidelist[item][0]}}
+                                <small style="color:red; font-size:14px;">${{sidelist[item][2]}}</small>
+                            </h5>
+                            <p>{{sidelist[item][1]}}</p>
+                            <form method="POST" action="{{url_for('delete_food', id = item)}}">
+                                <button style="float:right;"  name="deleteid" value="{{item}}" type="button" data-toggle="modal" data-target="#{{sidelist[item][0].replace(' ','')}}" class="btn btn-danger">Delete</button>
+                                <div class="modal" id="{{sidelist[item][0].replace(' ','')}}">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                      <!-- Modal Header -->
+                                      <div class="modal-header">
+                                        <h4 class="modal-title">Delete Confirmation</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      </div>
+                                      <!-- Modal body -->
+                                      <div class="modal-body">
+                                          Are you sure you want to delete {{item}}?
+                                      </div>
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </form>
+
+                            <form method="POST">
+                                <button style="float:right;" name="foodid" value="{{item}}" type="submit" class="btn btn-primary">Edit Dish</button>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            {% endif %}
+        {% endif %}
+    {%endfor%}
+{% endblock %}

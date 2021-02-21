@@ -21,6 +21,7 @@ class Admin():
         return 'username: {} \n password:{} \n'.format(self.__username,self.get_user_pw())
 
 class User():
+
     def __init__(self, user_email, username, user_pw, user_firstname, user_lastname):
         self.__user_id = uuid.uuid4().hex
         self.__user_email = user_email
@@ -134,44 +135,14 @@ def update_user(user_obj):
             db[user_obj.get_user_id()] = user_obj
             db.close()
 
-# #This is where we access the cart
-# class Cart():
-#
-#     count = 0
-#
-#     food_details = {'foodid1':["PRIME STEER RIBEYE", 28.90],
-#             'foodid2':["IEAT SUPER BURGER", 28.90]
-#             }
-#
-#     def __init__(self, food_id, food_quantity):
-#         self.__food_id = food_id
-#         self.__dict__food_details = Cart.food_details
-#         self.__food_quantity = food_quantity
-#         self.__food_count = Cart.count
-#
-# #Food accessor method
-#     def get_food_id(self):
-#         return self.__food_id
-#
-#     def get_food_quantity(self):
-#         return self.__food_quantity
-#
-#     def get_food_details(self):
-#         return self.__dict__food_details
-#
-#     def get_total_price(self):
-#         return self.__dict__food_details[self.__food_id[1]] * self.__food_quantity
-#
-# #Set food method
-#     def set_food_quantity(self, food_quantity):
-#         self.__food_quantity = food_quantity
 
 class Food():
-    def __init__(self, name, description, price, picture):
+    def __init__(self, name, description, price, picture, food_category):
         self.__name = name
         self.__description = description
         self.__price = price
         self.__picture = picture
+        self.__food_catgeory = food_category
 
     def set_name(self, name):
         self.__name = name
@@ -181,6 +152,8 @@ class Food():
         self.__price = price
     def set_picture(self, picture):
         self.__picture = picture
+    def set_food_category(self, food_category):
+        self.__food_catgeory = food_category
 
     def get_name(self):
         return self.__name
@@ -190,26 +163,32 @@ class Food():
         return self.__price
     def get_picture(self):
         return self.__picture
+    def get_food_category(self):
+        return self.__food_catgeory
 
     def __str__(self):
-        return ' name:{} \n description:{} \n price:{} \n picture:{}'.format(self.get_name(), self.get_description(), self.__price, self.__picture)
+        return ' name:{} \n description:{} \n price:{} \n picture:{} \n category:{}'.format(self.get_name(), self.get_description(), self.__price, self.__picture, self.__food_catgeory)
 
 
 # Setting and Retrieving Seating Plans
 class Seat():
     count_id = 0
 
-    def __init__(self, name, seat):
+    def __init__(self, name, time, seat):
         Seat.count_id += 1
         self.__user_id = Seat.count_id
         self.__name = name
         self.__seat = seat
+        self.__time = time
 
     def get_name(self):
         return self.__name
 
     def get_user_id(self):
         return self.__user_id
+
+    def get_time(self):
+        return self.__time
 
     def get_seat(self):
         return self.__seat
@@ -220,6 +199,9 @@ class Seat():
     def set_name(self, name):
         self.__name = name
 
+    def set_time(self, time):
+        self.__time = time
+
     def set_seat(self, seat):
         self.__seat = seat
 
@@ -227,15 +209,68 @@ class Seat():
 
 
 class TemperatureM():
-
-    def __init__(self, temperaturemorning):
+    def __init__(self, temperaturemorning, temperatureafternoon, temperaturenight, username, declaration1, declaration2, declaration3, declaration4):
         self.__temperaturemorning = temperaturemorning
+        self.__temperatureafternoon = temperatureafternoon
+        self.__temperaturenight = temperaturenight
+        self.__username = username
+        self.__declaration1 = declaration1
+        self.__declaration2 = declaration2
+        self.__declaration3 = declaration3
+        self.__declaration4 = declaration4
+
 
     def get_temperaturemorning(self):
         return self.__temperaturemorning
 
+    def get_temperatureafternoon(self):
+        return self.__temperatureafternoon
+
+    def get_temperaturenight(self):
+        return self.__temperaturenight
+
+    def get_username(self):
+        return self.__username
+
+    def get_declaration1(self):
+        return self.__declaration1
+
+    def get_declaration2(self):
+        return self.__declaration2
+
+    def get_declaration3(self):
+        return self.__declaration3
+
+    def get_declaration4(self):
+        return self.__declaration4
+
+
+
     def set_temperaturemorning(self,temperaturemorning):
          self.__user_temperaturemorning = temperaturemorning
 
-    def _str_(self):
-        return ' temperaturemorning: {} '.format(self.get_temperaturemorning())
+    def set_temperatureafternoon(self,temperatureafternoon):
+         self.__user_temperatureafternoon = temperatureafternoon
+
+    def set_temperaturenight(self,temperaturenight):
+         self.__user_temperaturenight = temperaturenight
+
+    def set_username(self,username):
+        self.__user_username = username
+
+    def set_declaration1(self,declaration1):
+        self.__user_declaration1 = declaration1
+
+    def set_declaration2(self,declaration2):
+        self.__user_declaration2 = declaration2
+
+    def set_declaration3(self,declaration3):
+        self.__user_declaration3 = declaration3
+
+    def set_declaration4(self,declaration4):
+        self.__user_declaration4 = declaration4
+
+
+
+    def __str__(self):
+        return ' temperaturemorning: {} \n temperatureafternoon: {} \n temperaturenight: {} \n username: {} \n declaration1:{} \n declaration2: {} \n declaration3: {} \n declaration4: {}'.format(self.get_temperaturemorning(), self.get_temperatureafternoon(), self.get_temperaturenight(), self.get_username(), self.get_declaration1(), self.get_declaration2(), self.get_declaration3(), self.get_declaration4())

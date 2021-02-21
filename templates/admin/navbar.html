@@ -26,14 +26,14 @@
     <div class="container-fluid">
     </div>
     {% if session['adminlogin']%}
+    <a href="/admin/viewuser" type="button"
+       class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Display User</a>
+    <a href="/admin/addfood" type="button"
+       class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Add Dish</a>
+    <a href="/staff/morning" type="button"
+       class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Add Staff Temperature</a>
     <a href="#" type="button"
-       class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">User</a>
-    <a href="#" type="button"
-       class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Food</a>
-    <a href="#" type="button"
-       class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Temperature Check</a>
-    <a href="#" type="button"
-       class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Seating Plan</a>
+       class="navbtn btn btn-outline-light btn-md btn-rounded btn-navbar waves-effect waves-light">Display Seating</a>
     <img class="icon" src=/static/images/profilepictures/avatar.jpg>
     <div class="widget-header dropdown">
         <a href="#" class="" data-toggle="dropdown" data-offset="20,10">
@@ -43,8 +43,6 @@
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#">My Profile</a>
-            <hr class="dropdown-divider">
             <a class="dropdown-item" href="/admin/logout">Log out</a>
         </div>
     </div>

@@ -1,5 +1,5 @@
 {% from 'components/formhelper.html' import render_field %}
-{% extends "/base.html"%}
+{% extends "/admin/base.html"%}
 {% block content%}
 
 <style>
@@ -29,26 +29,58 @@
     hr{
     background-color:#DC143C
     }
+    #backbtn img {
+      width:18px;
+      height:18px;
+      margin-right:5px;
+      margin-top:1em;
+      margin-bottom:1em;
+    }
+
+    a {
+    color:black;
+    }
+
+    a:hover{
+    color:black;
+    text-decoration:none;
+    }
+
 </style>
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<div id="diva" class="sidenav col-3">
-    <a href="morning">Morning</a>
-    <a href="afternoon">Afternoon</a>
-    <a href="night">Night</a>
-</div>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-<a style="text-decoration:none; color:black; font-size:24px; margin-left:2em;" href="/"><img src="../static/images/Back.png" style="width:24px;height:24px;">  Back</a>
+<a style="text-decoration:none; color:black; font-size:24px; margin-left:2em;" href="/admin/home"><img src="../static/images/Back.png" style="width:24px;height:24px;">  Back</a>
 <div class="container">
     <form method="POST" action="" enctype="multipart/form-data" >
         <div class="form-group">
-            {{ render_field(form.temperature_morning, class="form-control", placeholder="Enter your temperature") }}
+            {{ render_field(form.temperature_morning, class="form-control", placeholder="Enter your morning temperature") }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.temperature_afternoon, class="form-control", placeholder="Enter your afternoon temperature") }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.temperature_night, class="form-control", placeholder="Enter your night temperature") }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.username, class="form-control", placeholder="Enter your username") }}
+        </div>
+        <div>
+            {{ render_field(form.declaration_1, class="form-check") }}
+        </div>
+         <div>
+            {{ render_field(form.declaration_2, class="form-check") }}
+        </div>
+         <div>
+            {{ render_field(form.declaration_3, class="form-check") }}
+        </div>
+         <div>
+            {{ render_field(form.declaration_4, class="form-check") }}
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         <a href="/staff/retrievetemps"> Temperature log</a>
-
     </form>
 </div>
 

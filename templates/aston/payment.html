@@ -39,6 +39,41 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
+                {{ render_field(form.card, class="form-control") }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                {{ render_field(form.cardnumber, class="form-control", placeholder='e.g 1234567891234567 (16 Digits)') }}
+                {% if cardnumbererror %}
+                    <p  style="color:red;" class="error"><strong>Error:</strong> {{ cardnumbererror }}
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                {{ render_field(form.expirydate, class="form-control", placeholder='mm/yy') }}
+                {% if expiryerror %}
+                        <p  style="color:red;" class="error"><strong>Error:</strong> {{ expiryerror }}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                {{ render_field(form.security, class="form-control", placeholder='e.g 123 (3 Digits)')  }}
+                {% if securityerror %}
+                <p  style="color:red;" class="error"><strong>Error:</strong> {{ securityerror }}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
                 {{ render_field(form.block_number, class="form-control", placeholder="Eg.#12-123") }}
             </div>
         </div>
@@ -49,7 +84,7 @@
             </div>
         </div>
 
-    <button style="float:right; margin-right:20em; margin-top:2em;" type="submit" class="btn btn-secondary" ><a href="/aston/receipt">Order Now</a></button>
+    <button style="float:right; margin-right:20em; margin-top:2em;" type="submit" class="btn btn-secondary" >Order Now</button>
     </form>
 
 </div>

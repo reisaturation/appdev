@@ -1,0 +1,50 @@
+{% extends '/admin/base.html'%}
+{% block content%}
+<style>
+    #backbtn img {
+      width:18px;
+      height:18px;
+      margin-right:5px;
+      margin-top:1em;
+      margin-bottom:1em;
+    }
+
+    a {
+    color:black;
+    }
+
+    a:hover{
+    color:black;
+    text-decoration:none;
+    }
+</style>
+
+<a style="margin-left:1em" id="backbtn" href="/admin/home"><img src="../static/images/Back.png">Back</a>
+ <table class="table table-striped">
+    <thead>
+      <tr>
+          <th>User</th>
+          <th>Picture</th>
+          <th>Username</th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% set count = namespace(value=0) %}
+    {% for user in userlist%}
+    {% set count.value = count.value + 1 %}
+        <tr>
+            <td>{{count.value}}</td>
+            <td>
+                <img style="padding-top:1em; width:100px; height:100px; border-radius:100%;" src="../../static/images/profilepictures/{{userlist[user][0]}}">
+            </td>
+            <td>{{userlist[user][1]}}</td>
+            <td>{{userlist[user][2]}}</td>
+            <td>{{userlist[user][3]}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+ </table>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends '/base.html'%}
+{% block content %}
+
+<style>
+
+     #backbtn{
+      text-decoration:none;
+      color:black;
+      font-size:18px;
+      margin-left:1em;
+    }
+
+    #backbtn img {
+      width:18px;
+      height:18px;
+      margin-right:5px;
+      margin-top:1em;
+      margin-bottom:1em;
+    }
+</style>
+
+<a id="backbtn" href="/aston/menu"><img src="../static/images/Back.png">Back</a>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>Orders</th>
+        <th>Number of items</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for item in foodlist %}
+      <tr>
+        <td></td>
+        <td></td>
+        <td>{{item}}</td>
+        <td style="padding-left:3em;">{{foodlist[item]|length}} Items</td>
+        <td>
+          <form>
+            <button style="float:right;"  type="button" data-toggle="modal" data-target="#n{{item}}" class="btn btn-primary">View Details</button>
+            <div class="modal" id="n{{item}}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">Order List</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  {% for food in foodlist[item]%}
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                    <div class="row">
+                      <img class="col-md-3" style="height:60px;" src="../../static/images/aston/{{ foodlist[item][food][3] }}">
+                      <div class="col-md-1">
+                        {{foodlist[item][food][1]}}&times;
+                      </div>
+                      <div class="col-md-5">
+                        <h5>{{food.replace('_',' ')}}</h5>
+                      </div>
+                      <div class="col-md-2">
+                        <small style="color:red; font-size:14px;">${{foodlist[item][food][2]}}</small>
+                      </div>
+                      <br>
+                    </div>
+                  </div>
+                  {%endfor%}
+                    <!-- Modal footer -->
+                    <div class="modal-footer"></div>
+                </div>
+              </div>
+            </div>
+        </form>
+        </td>
+        <td>
+          <td>
+          <form action="{{url_for('deletehistory', id = item)}}" method="POST">
+            <!-- Button to Open the Modal -->
+            <button type="button" class="close" data-toggle="modal" data-target="#d{{item}}">
+            &times;
+            </button>
+
+            <!-- The Modal -->
+            <div class="modal" id="d{{item}}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">Delete Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                    Are you sure you want to remove this history?
+                  </div>
+
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </form>
+        </td>
+        <td></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

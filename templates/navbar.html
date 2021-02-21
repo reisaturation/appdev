@@ -59,13 +59,14 @@
     <img class="icon" src=/static/images/profilepictures/{{session['profile_pic']}}>
     <div class="widget-header dropdown">
         <a href="#" class="" data-toggle="dropdown" data-offset="20,10">
-
             <div>
                 <small style="font-size:14px;">{{session['username']}}</small> <br>
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="/profile/viewprofile">My Profile</a>
+            <hr class="dropdown-divider">
+            <a class="dropdown-item" href="/profile/orderhistory">Order History</a>
             <hr class="dropdown-divider">
             <a class="dropdown-item" href="/logout">Log out</a>
         </div> <!--  dropdown-menu .// -->

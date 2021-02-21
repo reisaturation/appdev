@@ -1,0 +1,57 @@
+{% extends "admin/base.html"%}
+{% from 'components/formhelper.html' import render_field %}
+{% block content %}
+
+<style>
+    #editicon{
+    width:100px;
+    height:100px;
+    }
+
+    #backbtn img {
+      width:18px;
+      height:18px;
+      margin-right:5px;
+      margin-top:1em;
+      margin-bottom:1em;
+    }
+
+    a {
+    color:black;
+    }
+
+    a:hover{
+    color:black;
+    text-decoration:none;
+    }
+
+
+</style>
+
+<a style="margin-left:1em" id="backbtn" href="/admin/viewfood"><img src="../static/images/Back.png">Back</a>
+<form method="POST" style="margin:1em 5em 5em 5em;" enctype="multipart/form-data" >
+    <h4 style="padding-bottom:5px;">Edit dish</h4>
+    <img id=editicon class="icon" src=/static/images/aston/{{foodlist[3]}}>
+    <input type="file" name="image" id="image">
+        {% if extensionerror %}
+            <p  style="color:red;" class="error"><strong>Error:</strong> {{ extensionerror }}</p>
+        {% endif %}
+    <div>
+        {{ render_field(form.food_name, class="form-control", value= foodlist[0] ) }}
+    </div>
+    <div>
+        {{ render_field(form.food_category, class="form-control") }}
+    </div>
+    <div>
+        {{ render_field(form.food_price, class="form-control", value= foodlist[2] ) }}
+    </div>
+    <div>
+        {{ render_field(form.food_description, class="form-control", value =foodlist[1] ) }}
+    </div>
+    <div>
+        <button style="margin-top:1em; float:right" class="btn btn-secondary" type="submit">
+            Save Changes
+        </button>
+    </div>
+</form>
+{% endblock %}
